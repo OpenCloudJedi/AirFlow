@@ -1,0 +1,23 @@
+---
+- name: Configure Apache Airflow server
+  hosts: all
+  become: yes
+
+  tasks:
+
+    - name: Install all the software needed
+      apt:
+        name: "{{ item }}"
+        state: latest
+      loop:
+        - bash-completion       
+        - vim
+        - git
+        - docker.io
+        - docker-compose
+
+    - name: Add vagrant user to docker group
+      user:
+        name: vagrant
+        groups: docker
+        append: true
